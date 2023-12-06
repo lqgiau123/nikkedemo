@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-  <title>Nikei - Demo</title>
+  <title>Nikkei - Demo</title>
 
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -25,17 +25,25 @@
         <input type="hidden" th:field="*{id}" />
 
         <div class="p-3">
+
+			<div class="form-group row">
+				<label class="col-sm-3 col-form-label" for="title">ID</label>
+				<div class="col-sm-9">
+				  <input type="text" th:field="*{id}" class="form-control" disabled
+					id="id" />
+				</div>
+			</div>
+
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="title">Title</label>
+            <label class="col-sm-3 col-form-label" for="title">タイトル</label>
             <div class="col-sm-9">
-              <input type="text" th:field="*{title}" required minlength="2" maxlength="128" class="form-control"
+              <input type="text" th:field="*{title}" required maxlength="255" class="form-control"
                 id="title" />
             </div>
           </div>
 
-          <!-- NEW -->
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="major">Major</label>
+            <label class="col-sm-3 col-form-label" for="major">業界</label>
             <div class="col-sm-9">
               <input type="text" step="1" th:field="*{major}" 
                 class="form-control" id="major" />
@@ -43,7 +51,7 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="createNumber">Create Number</label>
+            <label class="col-sm-3 col-form-label" for="createNumber">作成数</label>
             <div class="col-sm-9">
               <input type="number" step="1" th:field="*{createNumber}" required min="1"
                 class="form-control" id="createNumber" />
@@ -51,7 +59,7 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="contentNumber">Content Number</label>
+            <label class="col-sm-3 col-form-label" for="contentNumber">文字数</label>
             <div class="col-sm-9">
               <input type="number" step="1" th:field="*{contentNumber}" required min="1"
                 class="form-control" id="contentNumber" />
@@ -61,13 +69,13 @@
           <!-- QA -->
           <!-- row 1 -->
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="question1">Câu Hỏi 1</label>
+            <label class="col-sm-3 col-form-label" for="question1">質問 1</label>
             <p class="col-sm-3">
               <input type="text" th:field="*{question1}" maxlength="256" class="form-control"
                 id="question1" />
             </p>
 
-            <label class="col-sm-3 col-form-label" for="answer1">Trả lời 1</label>
+            <label class="col-sm-3 col-form-label" for="answer1">回答 1</label>
             <p class="col-sm-3">
               <input type="text" th:field="*{answer1}"  maxlength="256" class="form-control"
                 id="answer1" />
@@ -76,13 +84,13 @@
 
           <!-- row 2 -->
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="question2">Câu Hỏi 2</label>
+            <label class="col-sm-3 col-form-label" for="question2">質問 2</label>
             <p class="col-sm-3">
               <input type="text" th:field="*{question2}"  maxlength="256" class="form-control"
                 id="question2" />
             </p>
 
-            <label class="col-sm-3 col-form-label" for="answer2">Trả lời 2</label>
+            <label class="col-sm-3 col-form-label" for="answer2">回答 2</label>
             <p class="col-sm-3">
               <input type="text" th:field="*{answer2}" maxlength="256" class="form-control"
                 id="answer2" />
@@ -91,13 +99,13 @@
 
            <!-- row 3 -->
            <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="question3">Câu Hỏi 3</label>
+            <label class="col-sm-3 col-form-label" for="question3">質問 3</label>
             <p class="col-sm-3">
               <input type="text" th:field="*{question3}"  maxlength="256" class="form-control"
                 id="question3" />
             </p>
 
-            <label class="col-sm-3 col-form-label" for="answer3">Trả lời 3</label>
+            <label class="col-sm-3 col-form-label" for="answer3">回答 3</label>
             <p class="col-sm-3">
               <input type="text" th:field="*{answer3}" maxlength="256" class="form-control"
                 id="answer3" />
@@ -106,13 +114,13 @@
 
             <!-- row 4 -->
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="question4">Câu Hỏi 4</label>
+              <label class="col-sm-3 col-form-label" for="question4">質問 4</label>
               <p class="col-sm-3">
                 <input type="text" th:field="*{question4}" maxlength="256" class="form-control"
                   id="question4" />
               </p>
   
-              <label class="col-sm-3 col-form-label" for="answer4">Trả lời 4</label>
+              <label class="col-sm-3 col-form-label" for="answer4">回答 4</label>
               <p class="col-sm-3">
                 <input type="text" th:field="*{answer4}" maxlength="256" class="form-control"
                   id="answer4" />
@@ -121,13 +129,13 @@
 
               <!-- row 5 -->
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question5">Câu Hỏi 5</label>
+                <label class="col-sm-3 col-form-label" for="question5">質問 5</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question5}" maxlength="256" class="form-control"
                     id="question5" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer5">Trả lời 5</label>
+                <label class="col-sm-3 col-form-label" for="answer5">回答 5</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer5}" maxlength="256" class="form-control"
                     id="answer5" />
@@ -136,13 +144,13 @@
 
                <!-- row 6 -->
                <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question6">Câu Hỏi 6</label>
+                <label class="col-sm-3 col-form-label" for="question6">質問 6</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question6}"  maxlength="256" class="form-control"
                     id="question6" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer6">Trả lời 6</label>
+                <label class="col-sm-3 col-form-label" for="answer6">回答 6</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer6}" maxlength="256" class="form-control"
                     id="answer6" />
@@ -151,13 +159,13 @@
 
                <!-- row 7 -->
                <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question7">Câu Hỏi 7</label>
+                <label class="col-sm-3 col-form-label" for="question7">質問 7</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question7}" maxlength="256" class="form-control"
                     id="question7" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer7">Trả lời 7</label>
+                <label class="col-sm-3 col-form-label" for="answer7">回答 7</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer7}" maxlength="256" class="form-control"
                     id="answer7" />
@@ -166,13 +174,13 @@
 
                 <!-- row 8 -->
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label" for="question8">Câu Hỏi 8</label>
+                  <label class="col-sm-3 col-form-label" for="question8">質問 8</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{question8}" maxlength="256" class="form-control"
                       id="question8" />
                   </p>
       
-                  <label class="col-sm-3 col-form-label" for="answer8">Trả lời 8</label>
+                  <label class="col-sm-3 col-form-label" for="answer8">回答 8</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{answer8}" maxlength="256" class="form-control"
                       id="answer8" />
@@ -181,13 +189,13 @@
 
                   <!-- row 9 -->
                <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question9">Câu Hỏi 9</label>
+                <label class="col-sm-3 col-form-label" for="question9">質問 9</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question9}" maxlength="256" class="form-control"
                     id="question9" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer9">Trả lời 9</label>
+                <label class="col-sm-3 col-form-label" for="answer9">回答 9</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer9}"  maxlength="256" class="form-control"
                     id="answer9" />
@@ -196,13 +204,13 @@
 
                 <!-- row 10 -->
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label" for="question10">Câu Hỏi 10</label>
+                  <label class="col-sm-3 col-form-label" for="question10">質問 10</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{question10}" maxlength="256" class="form-control"
                       id="question10" />
                   </p>
       
-                  <label class="col-sm-3 col-form-label" for="answer10">Trả lời 10</label>
+                  <label class="col-sm-3 col-form-label" for="answer10">回答 10</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{answer10}" maxlength="256" class="form-control"
                       id="answer10" />
@@ -211,13 +219,13 @@
 
                   <!-- row 11 -->
                <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question11">Câu Hỏi 11</label>
+                <label class="col-sm-3 col-form-label" for="question11">質問 11</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question11}" maxlength="256" class="form-control"
                     id="question11" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer11">Trả lời 11</label>
+                <label class="col-sm-3 col-form-label" for="answer11">回答 11</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer11}" maxlength="256" class="form-control"
                     id="answer11" />
@@ -226,13 +234,13 @@
 
                  <!-- row 12 -->
                  <div class="form-group row">
-                  <label class="col-sm-3 col-form-label" for="question12">Câu Hỏi 12</label>
+                  <label class="col-sm-3 col-form-label" for="question12">質問 12</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{question12}" maxlength="256" class="form-control"
                       id="question12" />
                   </p>
       
-                  <label class="col-sm-3 col-form-label" for="answer12">Trả lời 12</label>
+                  <label class="col-sm-3 col-form-label" for="answer12">回答 12</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{answer12}" maxlength="256" class="form-control"
                       id="answer12" />
@@ -241,13 +249,13 @@
 
                    <!-- row 13 -->
                <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question13">Câu Hỏi 13</label>
+                <label class="col-sm-3 col-form-label" for="question13">質問 13</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question13}" maxlength="256" class="form-control"
                     id="question13" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer13">Trả lời 13</label>
+                <label class="col-sm-3 col-form-label" for="answer13">回答 13</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer13}" maxlength="256" class="form-control"
                     id="answer13" />
@@ -256,13 +264,13 @@
 
                  <!-- row 14 -->
                  <div class="form-group row">
-                  <label class="col-sm-3 col-form-label" for="question14">Câu Hỏi 14</label>
+                  <label class="col-sm-3 col-form-label" for="question14">質問 14</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{question14}" maxlength="256" class="form-control"
                       id="question14" />
                   </p>
       
-                  <label class="col-sm-3 col-form-label" for="answer14">Trả lời 14</label>
+                  <label class="col-sm-3 col-form-label" for="answer14">回答 14</label>
                   <p class="col-sm-3">
                     <input type="text" th:field="*{answer14}" maxlength="256" class="form-control"
                       id="answer14" />
@@ -271,13 +279,13 @@
 
                    <!-- row 15 -->
                <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="question15">Câu Hỏi 15</label>
+                <label class="col-sm-3 col-form-label" for="question15">質問 15</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{question15}" maxlength="256" class="form-control"
                     id="question15" />
                 </p>
     
-                <label class="col-sm-3 col-form-label" for="answer15">Trả lời 15</label>
+                <label class="col-sm-3 col-form-label" for="answer15">回答 15</label>
                 <p class="col-sm-3">
                   <input type="text" th:field="*{answer15}" maxlength="256" class="form-control"
                     id="answer15" />
@@ -295,9 +303,9 @@
               </div>
 
           <div class="text-center">
-            <input type="submit" name="save" value="Save" class="btn btn-primary btn-sm mr-2" />
-            <input type="submit" name="saveandcall" value="SaveAndCall" class="btn btn-primary btn-sm mr-2" />
-            <input type="button" value="Cancel" id="btnCancel" class="btn btn-secondary btn-sm" />
+            <input type="submit" name="save" value="保存" class="btn btn-primary btn-sm mr-2" />
+            <input type="submit" name="saveandcall" value="プレスリリース生成 " class="btn btn-primary btn-sm mr-2" />
+            <input type="button" value="キャンセル" id="btnCancel" class="btn btn-secondary btn-sm" />
           </div>
         </div>
       </form>

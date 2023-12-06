@@ -64,7 +64,7 @@ public class TutorialController {
     //tutorial.setPublished(true);
 
     model.addAttribute("tutorial", tutorial);
-    model.addAttribute("pageTitle", "Create new Tutorial");
+    model.addAttribute("pageTitle", "Create Content");
 
     return "tutorial_form";
   }
@@ -120,7 +120,7 @@ public class TutorialController {
       Tutorial tutorial = tutorialRepository.findById(id).get();
 
       model.addAttribute("tutorial", tutorial);
-      model.addAttribute("pageTitle", "Edit Tutorial (ID: " + id + ")");
+      model.addAttribute("pageTitle", "Edit Content");
 
       return "tutorial_form";
     } catch (Exception e) {
