@@ -19,7 +19,7 @@
     <h2 class="text-center">[[${pageTitle}]]</h2>
 
     <div class="my-3">
-      <form th:action="@{/tutorials/save}" method="post" enctype="multipart/form-data" th:object="${tutorial}"
+      <form th:action="@{/demo/save}" method="post" enctype="multipart/form-data" th:object="${tutorial}"
         style="max-width: 550px; margin: 0 auto">
 
         <input type="hidden" th:field="*{id}" />
@@ -317,7 +317,7 @@
   <script type="text/javascript">
     $(document).ready(function () {
       $("#btnCancel").on("click", function () {
-        window.location = "[[@{/tutorials}]]";
+        window.location = "[[@{/demo}]]";
       });
     });
   </script>

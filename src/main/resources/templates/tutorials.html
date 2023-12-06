@@ -96,7 +96,7 @@
         <tbody>
           <tr th:each="tutorial : ${tutorials}">
             <th scope="row">[[${tutorial.id}]]</th>
-            <td><a th:href="@{'/tutorials/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
+            <td><a th:href="@{'/demo/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
             <td>[[${tutorial.major}]]</td>
             <td>[[${tutorial.createBy}]]</td>
             <td>[[${tutorial.createAt}]]</td>

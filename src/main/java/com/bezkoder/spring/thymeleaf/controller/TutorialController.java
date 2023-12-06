@@ -38,7 +38,7 @@ public class TutorialController {
     private String apiUrl;
 
 
-  @GetMapping("/tutorials")
+  @GetMapping("/demo")
   public String getAll(Model model, @Param("titleSearch") String titleSearch
         , @Param("majorSearch") String majorSearch
         , @Param("questionSearch") String questionSearch
@@ -58,7 +58,7 @@ public class TutorialController {
     return "tutorials";
   }
 
-  @GetMapping("/tutorials/new")
+  @GetMapping("/demo/new")
   public String addTutorial(Model model) {
     Tutorial tutorial = new Tutorial();
     //tutorial.setPublished(true);
@@ -70,7 +70,7 @@ public class TutorialController {
   }
 
   //@PostMapping("/tutorials/save")
-  @RequestMapping(value = "/tutorials/save", method = RequestMethod.POST, params = "save")
+  @RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "save")
   public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
     try {
       tutorial.setCreateBy("demo");
@@ -82,11 +82,11 @@ public class TutorialController {
       redirectAttributes.addAttribute("message", e.getMessage());
     }
 
-    return "redirect:/tutorials";
+    return "redirect:/demo";
   }
 
   // save and call API
-  @RequestMapping(value = "/tutorials/save", method = RequestMethod.POST, params = "saveandcall")
+  @RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
   public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
     String prompt = "What is java?";
     //create a request
@@ -111,10 +111,10 @@ public class TutorialController {
     }
 
 
-    return "redirect:/tutorials";
+    return "redirect:/demo";
   }
 
-  @GetMapping("/tutorials/{id}")
+  @GetMapping("/demo/{id}")
   public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
     try {
       Tutorial tutorial = tutorialRepository.findById(id).get();
@@ -126,7 +126,7 @@ public class TutorialController {
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("message", e.getMessage());
 
-      return "redirect:/tutorials";
+      return "redirect:/demo";
     }
   }
 
