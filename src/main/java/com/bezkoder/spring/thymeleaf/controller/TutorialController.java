@@ -39,16 +39,16 @@ public class TutorialController {
 
 
   @GetMapping("/tutorials")
-  public String getAll(Model model, @Param("title") String title) {
+  public String getAll(Model model, @Param("titleSearch") String titleSearch
+        , @Param("majorSearch") String majorSearch
+        , @Param("questionSearch") String questionSearch
+        , @Param("answerSearch") String answerSearch
+        , @Param("resultSearch") String resultSearch ) {
     try {
       List<Tutorial> tutorials = new ArrayList<Tutorial>();
 
-      if (title == null) {
-        tutorialRepository.findAll().forEach(tutorials::add);
-      } else {
-        tutorialRepository.findByTitleContainingIgnoreCase(title).forEach(tutorials::add);
-        model.addAttribute("title", title);
-      }
+      tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
+      model.addAttribute("titleSearch", titleSearch);
 
       model.addAttribute("tutorials", tutorials);
     } catch (Exception e) {
@@ -61,7 +61,7 @@ public class TutorialController {
   @GetMapping("/tutorials/new")
   public String addTutorial(Model model) {
     Tutorial tutorial = new Tutorial();
-    tutorial.setPublished(true);
+    //tutorial.setPublished(true);
 
     model.addAttribute("tutorial", tutorial);
     model.addAttribute("pageTitle", "Create new Tutorial");
