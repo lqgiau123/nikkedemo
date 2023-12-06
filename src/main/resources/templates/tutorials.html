@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-  <title>BezKoder - Spring Boot Thymeleaf example</title>
+  <title>Nikei - Demo</title>
 
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -19,7 +19,7 @@
   <div th:replace="fragments/header :: header"></div>
 
   <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-    <h2 class="text-center">Tutorials</h2>
+    <h2 class="text-center">Service</h2>
 
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
       role="alert">
@@ -53,18 +53,18 @@
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Level</th>
-            <th scope="col">Published</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Major</th>
+            <th scope="col">Create By</th>
+            <th scope="col">Create At</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="tutorial : ${tutorials}">
             <th scope="row">[[${tutorial.id}]]</th>
             <td>[[${tutorial.title}]]</td>
-            <td>[[${tutorial.description}]]</td>
-            <td>[[${tutorial.level}]]</td>
+            <td>[[${tutorial.major}]]</td>
+            <td>[[${tutorial.createBy}]]</td>
+            <td>[[${tutorial.createAt}]]</td>
             <td>
               <a th:if="${tutorial.published == true}" class="fa-regular fa-square-check"
                 th:href="@{'/tutorials/' + ${tutorial.id} + '/published/false'}" title="Disable this tutorial"></a>
