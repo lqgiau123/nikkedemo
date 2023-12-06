@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-  <title>Nikei - Demo</title>
+  <title>Nikkei - Demo</title>
 
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -30,7 +30,7 @@
     </div>
 
     <div class="my-3">
-      <form th:action="@{/tutorials}">
+      <form th:action="@{/demo}">
         <div class="row d-flex">
 		  <!-- new -->
 		  <div class="col-md-12 mt-2">
@@ -149,7 +149,7 @@
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");
-        window.location = "[[@{/tutorials}]]";
+        window.location = "[[@{/demo}]]";
       });
     });
   </script>
