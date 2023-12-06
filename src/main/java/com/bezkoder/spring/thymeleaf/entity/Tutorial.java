@@ -10,7 +10,6 @@ public class Tutorial {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-
   @Column(length = 256)
   private String description;
 

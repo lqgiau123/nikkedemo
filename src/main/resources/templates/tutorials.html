@@ -32,15 +32,59 @@
     <div class="my-3">
       <form th:action="@{/tutorials}">
         <div class="row d-flex">
+			<!-- search original -->
           <div class="col-md-6 mt-2">
             <div class="search">
               <i class="fa fa-search"></i>
               <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
                 placeholder="Enter keyword">
-              <button type="submit" class="btn btn-secondary">Search</button>
+              <!-- <button type="submit" class="btn btn-secondary">Search</button> -->
             </div>
           </div>
+		  <!-- new -->
+		  <div class="col-md-12 mt-2">
+            <div class="search">
+              <i class="fa fa-search"></i>
+              <input id="title" type="search" name="title" th:value="${title}" class="form-control"
+                placeholder="Enter title">
+            </div>
+          </div>
+
+		  <div class="col-md-12 mt-2">
+            <div class="search">
+              <i class="fa fa-search"></i>
+              <input id="major" type="search" name="major" th:value="${major}" class="form-control"
+                placeholder="Enter major">
+            </div>
+          </div>
+
+		  <div class="col-md-12 mt-2">
+            <div class="search">
+              <i class="fa fa-search"></i>
+              <input id="question1" type="search" name="question1" th:value="${question1}" class="form-control"
+                placeholder="Enter question1">
+            </div>
+          </div>
+
+		  <div class="col-md-12 mt-2">
+            <div class="search">
+              <i class="fa fa-search"></i>
+              <input id="answer1" type="search" name="answer1" th:value="${answer1}" class="form-control"
+                placeholder="Enter answer1">
+            </div>
+          </div>
+
+		  <div class="col-md-12 mt-2">
+            <div class="search">
+              <i class="fa fa-search"></i>
+              <input id="result" type="search" name="result" th:value="${result}" class="form-control"
+                placeholder="Enter result">
+            </div>
+          </div>
+
+		  <!-- search button -->
           <div class="col-md-6 mt-2">
+			<button type="submit" class="btn btn-secondary">Search</button>
             <button id="btnClear" class="btn btn-info">Clear</button>
           </div>
         </div>
