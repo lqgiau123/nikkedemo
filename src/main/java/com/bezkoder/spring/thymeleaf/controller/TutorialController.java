@@ -73,6 +73,8 @@ public class TutorialController {
   @RequestMapping(value = "/tutorials/save", method = RequestMethod.POST, params = "save")
   public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
     try {
+      tutorial.setCreateBy("demo");
+      tutorial.setCreateAt("2023-12-06 00:01:02");
       tutorialRepository.save(tutorial);
 
       redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
