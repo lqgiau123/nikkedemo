@@ -49,7 +49,10 @@ public class TutorialController {
 
       tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
       model.addAttribute("titleSearch", titleSearch);
-
+      model.addAttribute("majorSearch", majorSearch);
+      model.addAttribute("questionSearch", questionSearch);
+      model.addAttribute("answerSearch", answerSearch);
+      model.addAttribute("resultSearch", resultSearch);
       model.addAttribute("tutorials", tutorials);
     } catch (Exception e) {
       model.addAttribute("message", e.getMessage());
