@@ -39,15 +39,15 @@ public class TutorialController {
 
 
   @GetMapping("/tutorials")
-  public String getAll(Model model, @Param("keyword") String keyword) {
+  public String getAll(Model model, @Param("title") String title) {
     try {
       List<Tutorial> tutorials = new ArrayList<Tutorial>();
 
-      if (keyword == null) {
+      if (title == null) {
         tutorialRepository.findAll().forEach(tutorials::add);
       } else {
-        tutorialRepository.findByTitleContainingIgnoreCase(keyword).forEach(tutorials::add);
-        model.addAttribute("keyword", keyword);
+        tutorialRepository.findByTitleContainingIgnoreCase(title).forEach(tutorials::add);
+        model.addAttribute("title", title);
       }
 
       model.addAttribute("tutorials", tutorials);
