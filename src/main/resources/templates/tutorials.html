@@ -19,7 +19,7 @@
   <div th:replace="fragments/header :: header"></div>
 
   <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-    <h2 class="text-center">Service</h2>
+    <h2 class="text-center"></h2>
 
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
       role="alert">
@@ -34,6 +34,7 @@
         <div class="row d-flex">
 		  <!-- new -->
 		  <div class="col-md-12 mt-2">
+			<label>タイトル</label>
             <div class="search">
               <i class="fa fa-search"></i>
               <input id="title" type="search" name="titleSearch" th:value="${titleSearch}" class="form-control"
@@ -42,6 +43,7 @@
           </div>
 
 		  <div class="col-md-12 mt-2">
+			<label>業界</label>
             <div class="search">
               <i class="fa fa-search"></i>
               <input id="major" type="search" name="majorSearch" th:value="${major}" class="form-control"
@@ -50,6 +52,7 @@
           </div>
 
 		  <div class="col-md-12 mt-2">
+			<label>質問内容</label>
             <div class="search">
               <i class="fa fa-search"></i>
               <input id="question1" type="search" name="questionSearch" th:value="${questionSearch}" class="form-control"
@@ -58,6 +61,7 @@
           </div>
 
 		  <div class="col-md-12 mt-2">
+			<label>回答内容</label>
             <div class="search">
               <i class="fa fa-search"></i>
               <input id="answer1" type="search" name="answerSearch" th:value="${answerSearch}" class="form-control"
@@ -66,6 +70,7 @@
           </div>
 
 		  <div class="col-md-12 mt-2">
+			<label>生成結果</label>
             <div class="search">
               <i class="fa fa-search"></i>
               <input id="result" type="search" name="resultSearch" th:value="${resultSearch}" class="form-control"
@@ -96,23 +101,10 @@
         <tbody>
           <tr th:each="tutorial : ${tutorials}">
             <th scope="row">[[${tutorial.id}]]</th>
-            <td>[[${tutorial.title}]]</td>
+            <td><a th:href="@{'/tutorials/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
             <td>[[${tutorial.major}]]</td>
             <td>[[${tutorial.createBy}]]</td>
             <td>[[${tutorial.createAt}]]</td>
-            <td>
-              <a th:if="${tutorial.published == true}" class="fa-regular fa-square-check"
-                th:href="@{'/tutorials/' + ${tutorial.id} + '/published/false'}" title="Disable this tutorial"></a>
-              <a th:if="${tutorial.published == false}" class="fa-regular fa-square icon-dark"
-                th:href="@{'/tutorials/' + ${tutorial.id} + '/published/true'}" title="Enable this tutorial"></a>
-            </td>
-            <td>
-              <a th:href="@{'/tutorials/' + ${tutorial.id}}" title="Edit this tutorial"
-                class="fa-regular fa-pen-to-square icon-dark"></a>
-              &nbsp;
-              <a th:href="@{'/tutorials/delete/' + ${tutorial.id}}" th:tutorialTitle="${tutorial.title}" id="btnDelete"
-                title="Delete this tutorial" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
-            </td>
           </tr>
         </tbody>
       </table>
