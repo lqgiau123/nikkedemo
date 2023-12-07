@@ -2,174 +2,185 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-  <title>Nikkei - Demo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+	<title>Nikkei - Demo</title>
 
-  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
 <body>
-  <div th:replace="fragments/header :: header"></div>
-  <section class="search-form">
-    <div class="container">
-      <h2 class="text-center font-weight-bold">プロンプト入力・結果検索画面</h2>
-      <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
-        role="alert">
-        [[${message}]]
-        <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="my-3">
-        <h5 class="title-form font-weight-bold">検索条件</h5>
-        <form th:action="@{/demo}">
-          <div class="main">
-            <!-- new -->
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-2 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">タイトル</label></div>
-                  <div class="col-md-10">
-                    <div class="search">
-                      <input id="title" type="search" name="titleSearch" th:value="${titleSearch}" class="form-control" placeholder="Enter title">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End col-md-6 -->
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-2 d-flex align-items-center pdleft-customize"><label class="font-weight-bold mb-0">業界</label></div>
-                  <div class="col-md-10">
-                    <div class="search">
-                      <input id="major" type="search" name="majorSearch" th:value="${majorSearch}" class="form-control" placeholder="Enter major">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End col-md-6 -->
-            </div>
-            <!-- End row -->
-            <div class="row mt-3">
-              <div class="col-md-1 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">質問内容</label></div>
-              <div class="col-md-11">
-                <div class="search">
-                  <input id="question1" type="search" name="questionSearch" th:value="${questionSearch}" class="form-control" placeholder="Enter question">
-                </div>
-              </div>
-            </div>
-            <!-- End row -->
-            <div class="row mt-3">
-              <div class="col-md-1 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">回答内容</label></div>
-              <div class="col-md-11">
-                <div class="search">
-                  <input id="answer1" type="search" name="answerSearch" th:value="${answerSearch}" class="form-control" placeholder="Enter answer">
-                </div>
-              </div>
-            </div>
-            <!-- End row -->
-            <div class="row mt-3">
-              <div class="col-md-1 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">生成結果</label></div>
-              <div class="col-md-11">
-                <div class="search">
-                  <input id="result" type="search" name="resultSearch" th:value="${resultSearch}" class="form-control" placeholder="Enter result">
-                </div>
-              </div>
-            </div>
-            <!-- search button -->
-            <div class="row mt-3">
-              <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-secondary">検索</button>
-                <button id="btnClear" class="btn btn-info btn-customize">クリア</button>
-              </div>
-            </div>
-          </div>
-          <!-- End Main -->
-        </form>
-        <!-- End Form -->
-      </div>
+	<div th:replace="fragments/header :: header"></div>
+	<section class="search-form">
+		<div class="container">
+			<h2 class="text-center font-weight-bold">プロンプト入力・結果検索画面</h2>
+			<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+				role="alert">
+				[[${message}]]
+				<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="my-3">
+				<h5 class="title-form font-weight-bold">検索条件</h5>
+				<form th:action="@{/demo}">
+					<div class="main">
+						<!-- new -->
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-2 d-flex align-items-center pr-0"><label
+											class="font-weight-bold mb-0">タイトル</label></div>
+									<div class="col-md-10">
+										<div class="search">
+											<input id="title" type="search" name="titleSearch" th:value="${titleSearch}"
+												class="form-control" placeholder="タイトル入力">
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End col-md-6 -->
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-2 d-flex align-items-center pdleft-customize"><label
+											class="font-weight-bold mb-0">業界</label></div>
+									<div class="col-md-10">
+										<div class="search">
+											<input id="major" type="search" name="majorSearch" th:value="${majorSearch}"
+												class="form-control" placeholder="業界入力">
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End col-md-6 -->
+						</div>
+						<!-- End row -->
+						<div class="row mt-3">
+							<div class="col-md-1 d-flex align-items-center pr-0"><label
+									class="font-weight-bold mb-0">質問内容</label></div>
+							<div class="col-md-11">
+								<div class="search">
+									<input id="question1" type="search" name="questionSearch"
+										th:value="${questionSearch}" class="form-control" placeholder="質問内容入力">
+								</div>
+							</div>
+						</div>
+						<!-- End row -->
+						<div class="row mt-3">
+							<div class="col-md-1 d-flex align-items-center pr-0"><label
+									class="font-weight-bold mb-0">回答内容</label></div>
+							<div class="col-md-11">
+								<div class="search">
+									<input id="answer1" type="search" name="answerSearch" th:value="${answerSearch}"
+										class="form-control" placeholder="回答内容入力">
+								</div>
+							</div>
+						</div>
+						<!-- End row -->
+						<div class="row mt-3">
+							<div class="col-md-1 d-flex align-items-center pr-0"><label
+									class="font-weight-bold mb-0">生成結果</label></div>
+							<div class="col-md-11">
+								<div class="search">
+									<input id="result" type="search" name="resultSearch" th:value="${resultSearch}"
+										class="form-control" placeholder="生成結果入力">
+								</div>
+							</div>
+						</div>
+						<!-- search button -->
+						<div class="row mt-3">
+							<div class="col-md-12 text-center">
+								<button type="submit" class="btn btn-secondary">検索</button>
+								<button id="btnClear" class="btn btn-info btn-customize">クリア</button>
+							</div>
+						</div>
+					</div>
+					<!-- End Main -->
+				</form>
+				<!-- End Form -->
+			</div>
 
-      <div th:if="${tutorials.size() > 0}">
-        <div class="title-result">
-          <h5 class="title-form font-weight-bold">検索結果</h5>
-          <table class="table table-bordered table-hover table-responsive-xl table-customize">
-            <thead class="table-success">
-              <tr class="text-center">
-                <th scope="col">ID</th>
-                <th scope="col">タイトル</th>
-                <th scope="col">業界</th>
-                <th scope="col">作成者</th>
-                <th scope="col">作成日</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="tutorial : ${tutorials}">
-                <th scope="row" class="text-center">[[${tutorial.id}]]</th>
-                <td class="text-uppercase"><a th:href="@{'/demo/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
-                <td class="text-uppercase">[[${tutorial.major}]]</td>
-                <td class="text-uppercase">[[${tutorial.createBy}]]</td>
-                <td class="text-uppercase">[[${tutorial.createAt}]]</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+			<div th:if="${tutorials.size() > 0}">
+				<div class="title-result">
+					<h5 class="title-form font-weight-bold">検索結果</h5>
+					<table class="table table-bordered table-hover table-responsive-xl table-customize">
+						<thead class="table-success">
+							<tr class="text-center">
+								<th scope="col">ID</th>
+								<th scope="col">タイトル</th>
+								<th scope="col">業界</th>
+								<th scope="col">作成者</th>
+								<th scope="col">作成日</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tutorial : ${tutorials}">
+								<th scope="row" class="text-center">[[${tutorial.id}]]</th>
+								<td class="text-uppercase"><a
+										th:href="@{'/demo/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
+								<td class="text-uppercase">[[${tutorial.major}]]</td>
+								<td class="text-uppercase">[[${tutorial.createBy}]]</td>
+								<td class="text-uppercase">[[${tutorial.createAt}]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 
-      <div class="" th:unless="${tutorials.size() > 0}">
-        <span>No tutorials found!</span>
-      </div>
-    </div>
-  </section>
-  <div class="modal fade text-center" id="confirmModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Delete Confirmation</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+			<div class="" th:unless="${tutorials.size() > 0}">
+				<span>No tutorials found!</span>
+			</div>
+		</div>
+	</section>
+	<div class="modal fade text-center" id="confirmModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Delete Confirmation</h5>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
-        <div class="modal-body">
-          <span id="confirmText"></span>
-        </div>
+				<div class="modal-body">
+					<span id="confirmText"></span>
+				</div>
 
-        <div class="modal-footer">
-          <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="modal-footer">
+					<a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/footer :: footer"></div>
 
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $(".btn-delete").on("click", function (e) {
-        e.preventDefault();
-        link = $(this);
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(".btn-delete").on("click", function (e) {
+				e.preventDefault();
+				link = $(this);
 
-        tutorialTitle = link.attr("tutorialTitle");
-        $("#yesBtn").attr("href", link.attr("href"));
-        $("#confirmText").html("Do you want to delete the Tutorial \<strong\>" + tutorialTitle + "\<\/strong\>?");
-        $("#confirmModal").modal();
-      });
+				tutorialTitle = link.attr("tutorialTitle");
+				$("#yesBtn").attr("href", link.attr("href"));
+				$("#confirmText").html("Do you want to delete the Tutorial \<strong\>" + tutorialTitle + "\<\/strong\>?");
+				$("#confirmModal").modal();
+			});
 
-      $("#btnClear").on("click", function (e) {
-        e.preventDefault();
-        $("#keyword").text("");
-        window.location = "[[@{/demo}]]";
-      });
-    });
-  </script>
+			$("#btnClear").on("click", function (e) {
+				e.preventDefault();
+				$("#keyword").text("");
+				window.location = "[[@{/demo}]]";
+			});
+		});
+	</script>
 
 </body>
 
