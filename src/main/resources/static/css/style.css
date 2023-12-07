@@ -16,15 +16,15 @@
   position: relative;
 }
 
-.search input {
+/* .search input {
   text-indent: 25px;
   border: 2px solid #d6d4d4;
-}
+} */
 
-.search input:focus {
+/* .search input:focus {
   box-shadow: none;
   border: 1px solid grey;
-}
+} */
 
 .search .fa-search {
   position: absolute;
@@ -40,7 +40,7 @@
   background: grey;
 }
 /* CSS Customize for list*/ 
-.search-form{
+.spacing-page{
   padding: 64px 32px;
 }
 .title-form{
@@ -61,6 +61,9 @@
 }
 .pdleft-customize{
   padding-left: 40px;
+}
+.search input::placeholder{
+  opacity: 0.5;
 }
 /* for tab */
 
@@ -99,5 +102,11 @@
   border: 1px solid #ccc;
   border-top: none;
 }
-
 /* for tab */
+/* CSS Customize for Edit Page */ 
+.edit-page .form-edit .nav-tabs .nav-link{
+  color: #000000;
+}
+.edit-page .form-edit .nav-tabs .nav-link.active{
+  background-color: rgba(255,242,204);
+}
