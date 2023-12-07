@@ -27,15 +27,15 @@ import com.bezkoder.spring.thymeleaf.repository.TutorialRepository;
 @Controller
 public class TutorialController {
 
-  @Autowired
-  private TutorialRepository tutorialRepository;
+	@Autowired
+	private TutorialRepository tutorialRepository;
 
-  @Qualifier("openaiRestTemplate")
-    @Autowired
-    private RestTemplate restTemplate;
-    
-    @Value("${openai.chatgtp.model}")
-    private String modelGPT;
+	@Qualifier("openaiRestTemplate")
+		@Autowired
+		private RestTemplate restTemplate;
+		
+		@Value("${openai.chatgtp.model}")
+		private String modelGPT;
 
 	@Value("${openai.chatgtp.max-completions}")
 	private int maxCompletions;
@@ -48,12 +48,12 @@ public class TutorialController {
 
 	@Value("${openai.chatgtp.max_tokens}")
 	private int maxTokens;
-    
-    @Value("${openai.chatgtp.api.url}")
-    private String apiUrl;
+		
+		@Value("${openai.chatgtp.api.url}")
+		private String apiUrl;
 
 	/* Create DateTime */
-    public static String getCurrentTimeStamp() {
+		public static String getCurrentTimeStamp() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
@@ -61,144 +61,133 @@ public class TutorialController {
 	}
 
 
-  @GetMapping("/demo")
-  public String getAll(Model model, @Param("titleSearch") String titleSearch
-        , @Param("majorSearch") String majorSearch
-        , @Param("questionSearch") String questionSearch
-        , @Param("answerSearch") String answerSearch
-        , @Param("resultSearch") String resultSearch ) {
-    try {
-      List<Tutorial> tutorials = new ArrayList<Tutorial>();
+	@GetMapping("/demo")
+	public String getAll(Model model, @Param("titleSearch") String titleSearch
+				, @Param("majorSearch") String majorSearch
+				, @Param("questionSearch") String questionSearch
+				, @Param("answerSearch") String answerSearch
+				, @Param("resultSearch") String resultSearch ) {
+		try {
+			List<Tutorial> tutorials = new ArrayList<Tutorial>();
 
-      tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
-      model.addAttribute("titleSearch", titleSearch);
-      model.addAttribute("majorSearch", majorSearch);
-      model.addAttribute("questionSearch", questionSearch);
-      model.addAttribute("answerSearch", answerSearch);
-      model.addAttribute("resultSearch", resultSearch);
-      model.addAttribute("tutorials", tutorials);
-    } catch (Exception e) {
-      model.addAttribute("message", e.getMessage());
-    }
+			tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
+			model.addAttribute("titleSearch", titleSearch);
+			model.addAttribute("majorSearch", majorSearch);
+			model.addAttribute("questionSearch", questionSearch);
+			model.addAttribute("answerSearch", answerSearch);
+			model.addAttribute("resultSearch", resultSearch);
+			model.addAttribute("tutorials", tutorials);
+		} catch (Exception e) {
+			model.addAttribute("message", e.getMessage());
+		}
 
-    return "tutorials";
-  }
+		return "tutorials";
+	}
 
-  @GetMapping("/demo/new")
-  public String addTutorial(Model model) {
-    Tutorial tutorial = new Tutorial();
-    model.addAttribute("tutorial", tutorial);
-    model.addAttribute("pageTitle", "生成画面");
+	@GetMapping("/demo/new")
+	public String addTutorial(Model model) {
+		Tutorial tutorial = new Tutorial();
+		model.addAttribute("tutorial", tutorial);
+		model.addAttribute("pageTitle", "生成画面");
 
-    return "tutorial_form";
-  }
+		return "tutorial_form";
+	}
 
-  //@PostMapping("/tutorials/save")
-  @RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "save")
-  public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
-    try {
-      tutorial.setCreateBy("demo");
-      tutorial.setCreateAt(getCurrentTimeStamp());
-      tutorialRepository.save(tutorial);
+	//@PostMapping("/tutorials/save")
+	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "save")
+	public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
+		try {
+			tutorial.setCreateBy("demo");
+			tutorial.setCreateAt(getCurrentTimeStamp());
+			tutorialRepository.save(tutorial);
 
-      redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
-    } catch (Exception e) {
-      redirectAttributes.addAttribute("message", e.getMessage());
-    }
+			redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
+		} catch (Exception e) {
+			redirectAttributes.addAttribute("message", e.getMessage());
+		}
 
-    return "redirect:/demo";
-  }
+		return "redirect:/demo";
+	}
 
-  // save and call API
-  @RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
-  public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
-	String prompt = "あなたはプレスリリースを作る業界No.1のプロです。\\n" + //
-				"以下の質問と回答をもとに最高のプレスリリースを5つ提案してください。\\n" + //
-				"それぞれのプレスリリースはタイトルと文章のセットで作ってください。\\n" + //
-				"文章は100文字以内で作ってください。\\n" + //
-				"";
-				for(int i = 0; i<=1; i++) {
-					prompt = prompt
-					+ "質問" + (i+1) + ".\\n" + //
-					" " + tutorial.getQuestion1() + " \n"
-					+ "回答" + (i+1) + ".\\\\n" + //
-					" " + tutorial.getAnswer1() + " \n";
-				}
-    //create a request
-      ChatBotRequest request = new ChatBotRequest(modelGPT,
-          List.of(new Message("assistant", prompt)),
-          maxCompletions,
-          temperature,
-          maxTokens,
-          stop);
-      
-      // call the API
-      ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
-      
-      if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
-          return "No response";
-      } else {
-        tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
-		System.out.println(response.getChoices().get(0).getMessage().getContent());
-		//model.addAttribute("result", re);
-      }
-    
+	// save and call API
+	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
+	public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
+	String prompt = tutorial.toString();
 
-    try {
-      tutorialRepository.save(tutorial);
+			//create a request
+			ChatBotRequest request = new ChatBotRequest(modelGPT,
+					List.of(new Message("assistant", prompt)),
+					maxCompletions,
+					temperature,
+					maxTokens,
+					stop);
+			
+			// call the API
+			ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
+			
+			if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
+					return "No response";
+			} else {
+				tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
+				System.out.println(response.getChoices().get(0).getMessage().getContent());
+			}
+		
 
-      redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
-    } catch (Exception e) {
-      redirectAttributes.addAttribute("message", e.getMessage());
-    }
+		try {
+			tutorialRepository.save(tutorial);
+
+			redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
+		} catch (Exception e) {
+			redirectAttributes.addAttribute("message", e.getMessage());
+		}
 
 
-    return "redirect:/demo";
-  }
+		return "redirect:/demo";
+	}
 
-  @GetMapping("/demo/{id}")
-  public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-    try {
-      Tutorial tutorial = tutorialRepository.findById(id).get();
+	@GetMapping("/demo/{id}")
+	public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			Tutorial tutorial = tutorialRepository.findById(id).get();
 
-      model.addAttribute("tutorial", tutorial);
-      model.addAttribute("pageTitle", "編集画面");
+			model.addAttribute("tutorial", tutorial);
+			model.addAttribute("pageTitle", "編集画面");
 
-      return "tutorial_form";
-    } catch (Exception e) {
-      redirectAttributes.addFlashAttribute("message", e.getMessage());
+			return "tutorial_form";
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
 
-      return "redirect:/demo";
-    }
-  }
+			return "redirect:/demo";
+		}
+	}
 
-  @GetMapping("/tutorials/delete/{id}")
-  public String deleteTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-    try {
-      tutorialRepository.deleteById(id);
+	@GetMapping("/tutorials/delete/{id}")
+	public String deleteTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			tutorialRepository.deleteById(id);
 
-      redirectAttributes.addFlashAttribute("message", "The Tutorial with id=" + id + " has been deleted successfully!");
-    } catch (Exception e) {
-      redirectAttributes.addFlashAttribute("message", e.getMessage());
-    }
+			redirectAttributes.addFlashAttribute("message", "The Tutorial with id=" + id + " has been deleted successfully!");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+		}
 
-    return "redirect:/tutorials";
-  }
+		return "redirect:/tutorials";
+	}
 
-  @GetMapping("/tutorials/{id}/published/{status}")
-  public String updateTutorialPublishedStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean published,
-      Model model, RedirectAttributes redirectAttributes) {
-    try {
-      tutorialRepository.updatePublishedStatus(id, published);
+	@GetMapping("/tutorials/{id}/published/{status}")
+	public String updateTutorialPublishedStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean published,
+			Model model, RedirectAttributes redirectAttributes) {
+		try {
+			tutorialRepository.updatePublishedStatus(id, published);
 
-      String status = published ? "published" : "disabled";
-      String message = "The Tutorial id=" + id + " has been " + status;
+			String status = published ? "published" : "disabled";
+			String message = "The Tutorial id=" + id + " has been " + status;
 
-      redirectAttributes.addFlashAttribute("message", message);
-    } catch (Exception e) {
-      redirectAttributes.addFlashAttribute("message", e.getMessage());
-    }
+			redirectAttributes.addFlashAttribute("message", message);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+		}
 
-    return "redirect:/tutorials";
-  }
+		return "redirect:/tutorials";
+	}
 }

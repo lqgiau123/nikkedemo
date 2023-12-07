@@ -143,11 +143,63 @@ public class Tutorial {
   }
 
  
-  @Override
-  public String toString() {
-    return "Tutorial [id=" + id + ", title=" + title + ", description=" + description + ", level=" + level
-        + ", published=" + published + "]";
-  }
+    @Override
+    public String toString() {
+        return
+             "あなたはプレスリリースを作る業界No.1のプロです。\\n"
+            + "以下の質問と回答をもとに最高のプレスリリースを" + createNumber +"つ提案してください。\\n"
+            + "それぞれのプレスリリースはタイトルと文章のセットで作ってください。\\n"
+            + "文章は" + contentNumber + "文字以内で作ってください。\\n"
+            + "質問1." + question1 +"\\n" + "回答1." + answer1 +"\\n"
+            + "質問2." + question1 +"\\n" + "回答2." + answer1 +"\\n"
+            + "質問3." + question1 +"\\n" + "回答3." + answer1 +"\\n"
+            + "質問4." + question1 +"\\n" + "回答4." + answer1 +"\\n"
+            + "質問5." + question1 +"\\n" + "回答5." + answer1 +"\\n"
+            + "質問6." + question1 +"\\n" + "回答6." + answer1 +"\\n"
+            + "質問7." + question1 +"\\n" + "回答7." + answer1 +"\\n"
+            + "質問8." + question1 +"\\n" + "回答8." + answer1 +"\\n"
+            + "質問9." + question1 +"\\n" + "回答9." + answer1 +"\\n"
+            + "質問10." + question1 +"\\n" + "回答10." + answer1 +"\\n"
+            + "質問11." + question1 +"\\n" + "回答11." + answer1 +"\\n";
+    }
+
+
+    public Tutorial(String question1, String answer1, String question2, String answer2, String question3, String answer3,
+        String question4, String answer4, String question5, String answer5, String question6, String answer6,
+        String question7, String answer7, String question8, String answer8, String question9, String answer9,
+        String question10, String answer10, String question11, String answer11, String question12, String answer12,
+        String question13, String answer13, String question14, String answer14, String question15, String answer15) {
+            this.question1 = question1;
+            this.answer1 = answer1;
+            this.question2 = question2;
+            this.answer2 = answer2;
+            this.question3 = question3;
+            this.answer3 = answer3;
+            this.question4 = question4;
+            this.answer4 = answer4;
+            this.question5 = question5;
+            this.answer5 = answer5;
+            this.question6 = question6;
+            this.answer6 = answer6;
+            this.question7 = question7;
+            this.answer7 = answer7;
+            this.question8 = question8;
+            this.answer8 = answer8;
+            this.question9 = question9;
+            this.answer9 = answer9;
+            this.question10 = question10;
+            this.answer10 = answer10;
+            this.question11 = question11;
+            this.answer11 = answer11;
+            this.question12 = question12;
+            this.answer12 = answer12;
+            this.question13 = question13;
+            this.answer13 = answer13;
+            this.question14 = question14;
+            this.answer14 = answer14;
+            this.question15 = question15;
+            this.answer15 = answer15;   
+    }
 
     /**
      * @return Integer return the id
