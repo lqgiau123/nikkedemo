@@ -60,6 +60,13 @@ public class TutorialController {
 		return strDate;
 	}
 
+
+	@GetMapping("/")
+	public String Home(Model model) {
+		return "redirect:/demo";
+
+	}
+
 	@GetMapping("/demo")
 	public String getAll(Model model, @Param("titleSearch") String titleSearch
 				, @Param("majorSearch") String majorSearch
@@ -113,23 +120,23 @@ public class TutorialController {
 	public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
 	String prompt = tutorial.toString();
 
-			//create a request
-			ChatBotRequest request = new ChatBotRequest(modelGPT,
-					List.of(new Message("assistant", prompt)),
-					maxCompletions,
-					temperature,
-					maxTokens,
-					stop);
-			
-			// call the API
-			ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
-			
-			if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
-					return "No response";
-			} else {
-				tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
-				System.out.println(response.getChoices().get(0).getMessage().getContent());
-			}
+		//create a request
+		ChatBotRequest request = new ChatBotRequest(modelGPT,
+				List.of(new Message("assistant", prompt)),
+				maxCompletions,
+				temperature,
+				maxTokens,
+				stop);
+		
+		// call the API
+		ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
+		
+		if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
+				return "No response";
+		} else {
+			tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
+			System.out.println(response.getChoices().get(0).getMessage().getContent());
+		}
 		
 
 		try {
