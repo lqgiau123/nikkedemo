@@ -39,7 +39,29 @@
   width: 80px;
   background: grey;
 }
-
+/* CSS Customize for list*/ 
+.search-form{
+  padding: 64px 32px;
+}
+.title-form{
+  background-color: rgba(255,242,204);
+  margin-bottom: 20px;
+}
+.btn-customize{
+  background-color: #8fd19e;
+  border-color: #8fd19e;
+}
+.btn-customize:hover{
+  background-color: #6fa57b;
+  border-color: #6fa57b;   
+}
+.table-customize thead th{
+  border-color: #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+.pdleft-customize{
+  padding-left: 40px;
+}
 /* for tab */
 
 /* Style the tab */

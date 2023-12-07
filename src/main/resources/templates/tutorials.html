@@ -17,99 +17,116 @@
 
 <body>
   <div th:replace="fragments/header :: header"></div>
-
-  <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-    <h2 class="text-center"></h2>
-
-    <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
-      role="alert">
-      [[${message}]]
-      <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="my-3">
-      <form th:action="@{/demo}">
-        <div class="row d-flex">
-		  <!-- new -->
-		  <div class="col-md-12 mt-2">
-			<label>タイトル</label>
-            <div class="search">
-              <input id="title" type="search" name="titleSearch" th:value="${titleSearch}" class="form-control"
-                placeholder="Enter title">
+  <section class="search-form">
+    <div class="container">
+      <h2 class="text-center font-weight-bold">プロンプト入力・結果検索画面</h2>
+      <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+        role="alert">
+        [[${message}]]
+        <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="my-3">
+        <h5 class="title-form font-weight-bold">検索条件</h5>
+        <form th:action="@{/demo}">
+          <div class="main">
+            <!-- new -->
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-2 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">タイトル</label></div>
+                  <div class="col-md-10">
+                    <div class="search">
+                      <input id="title" type="search" name="titleSearch" th:value="${titleSearch}" class="form-control" placeholder="Enter title">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End col-md-6 -->
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-2 d-flex align-items-center pdleft-customize"><label class="font-weight-bold mb-0">業界</label></div>
+                  <div class="col-md-10">
+                    <div class="search">
+                      <input id="major" type="search" name="majorSearch" th:value="${majorSearch}" class="form-control" placeholder="Enter major">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End col-md-6 -->
+            </div>
+            <!-- End row -->
+            <div class="row mt-3">
+              <div class="col-md-1 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">質問内容</label></div>
+              <div class="col-md-11">
+                <div class="search">
+                  <input id="question1" type="search" name="questionSearch" th:value="${questionSearch}" class="form-control" placeholder="Enter question">
+                </div>
+              </div>
+            </div>
+            <!-- End row -->
+            <div class="row mt-3">
+              <div class="col-md-1 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">回答内容</label></div>
+              <div class="col-md-11">
+                <div class="search">
+                  <input id="answer1" type="search" name="answerSearch" th:value="${answerSearch}" class="form-control" placeholder="Enter answer">
+                </div>
+              </div>
+            </div>
+            <!-- End row -->
+            <div class="row mt-3">
+              <div class="col-md-1 d-flex align-items-center pr-0"><label class="font-weight-bold mb-0">生成結果</label></div>
+              <div class="col-md-11">
+                <div class="search">
+                  <input id="result" type="search" name="resultSearch" th:value="${resultSearch}" class="form-control" placeholder="Enter result">
+                </div>
+              </div>
+            </div>
+            <!-- search button -->
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-secondary">検索</button>
+                <button id="btnClear" class="btn btn-info btn-customize">クリア</button>
+              </div>
             </div>
           </div>
+          <!-- End Main -->
+        </form>
+        <!-- End Form -->
+      </div>
 
-		  <div class="col-md-12 mt-2">
-			<label>業界</label>
-            <div class="search">
-              <input id="major" type="search" name="majorSearch" th:value="${majorSearch}" class="form-control"
-                placeholder="Enter major">
-            </div>
-          </div>
-
-		  <div class="col-md-12 mt-2">
-			<label>質問内容</label>
-            <div class="search">
-              <input id="question1" type="search" name="questionSearch" th:value="${questionSearch}" class="form-control"
-                placeholder="Enter question">
-            </div>
-          </div>
-
-		  <div class="col-md-12 mt-2">
-			<label>回答内容</label>
-            <div class="search">
-              <input id="answer1" type="search" name="answerSearch" th:value="${answerSearch}" class="form-control"
-                placeholder="Enter answer">
-            </div>
-          </div>
-
-		  <div class="col-md-12 mt-2">
-			<label>生成結果</label>
-            <div class="search">
-              <input id="result" type="search" name="resultSearch" th:value="${resultSearch}" class="form-control"
-                placeholder="Enter result">
-            </div>
-          </div>
-
-		  <!-- search button -->
-          <div class="col-md-6 mt-2">
-			<button type="submit" class="btn btn-secondary">検索</button>
-            <button id="btnClear" class="btn btn-info">クリア</button>
-          </div>
+      <div th:if="${tutorials.size() > 0}">
+        <div class="title-result">
+          <h5 class="title-form font-weight-bold">検索結果</h5>
+          <table class="table table-bordered table-hover table-responsive-xl table-customize">
+            <thead class="table-success">
+              <tr class="text-center">
+                <th scope="col">ID</th>
+                <th scope="col">タイトル</th>
+                <th scope="col">業界</th>
+                <th scope="col">作成者</th>
+                <th scope="col">作成日</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="tutorial : ${tutorials}">
+                <th scope="row" class="text-center">[[${tutorial.id}]]</th>
+                <td class="text-uppercase"><a th:href="@{'/demo/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
+                <td class="text-uppercase">[[${tutorial.major}]]</td>
+                <td class="text-uppercase">[[${tutorial.createBy}]]</td>
+                <td class="text-uppercase">[[${tutorial.createAt}]]</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </form>
-    </div>
+      </div>
 
-    <div th:if="${tutorials.size() > 0}">
-      <table class="table table-hover table-responsive-xl">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">タイトル</th>
-            <th scope="col">業界</th>
-            <th scope="col">作成者</th>
-            <th scope="col">作成日</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="tutorial : ${tutorials}">
-            <th scope="row">[[${tutorial.id}]]</th>
-            <td><a th:href="@{'/demo/' + ${tutorial.id}}">[[${tutorial.title}]]</a></td>
-            <td>[[${tutorial.major}]]</td>
-            <td>[[${tutorial.createBy}]]</td>
-            <td>[[${tutorial.createAt}]]</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="" th:unless="${tutorials.size() > 0}">
+        <span>No tutorials found!</span>
+      </div>
     </div>
-
-    <div class="" th:unless="${tutorials.size() > 0}">
-      <span>No tutorials found!</span>
-    </div>
-  </div>
-
+  </section>
   <div class="modal fade text-center" id="confirmModal">
     <div class="modal-dialog">
       <div class="modal-content">
