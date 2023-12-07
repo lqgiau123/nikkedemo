@@ -15,11 +15,13 @@ public class ChatBotRequest {
     private List<Message> messages;
     private int n;
     private double temperature;
+    private int max_tokens;
+    private String stop;
 
     public ChatBotRequest(String model, String prompt) {
         this.model = model;
         
         this.messages = new ArrayList<>();
-        this.messages.add(new Message("user", prompt));
+        this.messages.add(new Message("assistant", prompt));
     }
 }

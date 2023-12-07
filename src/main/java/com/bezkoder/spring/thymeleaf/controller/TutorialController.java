@@ -1,6 +1,8 @@
 package com.bezkoder.spring.thymeleaf.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bezkoder.spring.thymeleaf.dto.ChatBotRequest;
 import com.bezkoder.spring.thymeleaf.dto.ChatBotResponse;
+import com.bezkoder.spring.thymeleaf.dto.Message;
 import com.bezkoder.spring.thymeleaf.entity.Tutorial;
 import com.bezkoder.spring.thymeleaf.repository.TutorialRepository;
 
@@ -32,10 +35,30 @@ public class TutorialController {
     private RestTemplate restTemplate;
     
     @Value("${openai.chatgtp.model}")
-    private String model;
+    private String modelGPT;
+
+	@Value("${openai.chatgtp.max-completions}")
+	private int maxCompletions;
+
+	@Value("${openai.chatgtp.temperature}")
+	private double temperature;
+
+	@Value("${openai.chatgtp.api.stop}")
+	private String stop;
+
+	@Value("${openai.chatgtp.max_tokens}")
+	private int maxTokens;
     
     @Value("${openai.chatgtp.api.url}")
     private String apiUrl;
+
+	/* Create DateTime */
+    public static String getCurrentTimeStamp() {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		return strDate;
+	}
 
 
   @GetMapping("/demo")
@@ -64,8 +87,6 @@ public class TutorialController {
   @GetMapping("/demo/new")
   public String addTutorial(Model model) {
     Tutorial tutorial = new Tutorial();
-    //tutorial.setPublished(true);
-
     model.addAttribute("tutorial", tutorial);
     model.addAttribute("pageTitle", "生成画面");
 
@@ -77,7 +98,7 @@ public class TutorialController {
   public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
     try {
       tutorial.setCreateBy("demo");
-      tutorial.setCreateAt("2023-12-06 00:01:02");
+      tutorial.setCreateAt(getCurrentTimeStamp());
       tutorialRepository.save(tutorial);
 
       redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
@@ -91,9 +112,25 @@ public class TutorialController {
   // save and call API
   @RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
   public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
-    String prompt = "What is java?";
+	String prompt = "あなたはプレスリリースを作る業界No.1のプロです。\\n" + //
+				"以下の質問と回答をもとに最高のプレスリリースを5つ提案してください。\\n" + //
+				"それぞれのプレスリリースはタイトルと文章のセットで作ってください。\\n" + //
+				"文章は100文字以内で作ってください。\\n" + //
+				"";
+				for(int i = 0; i<=1; i++) {
+					prompt = prompt
+					+ "質問" + (i+1) + ".\\n" + //
+					" " + tutorial.getQuestion1() + " \n"
+					+ "回答" + (i+1) + ".\\\\n" + //
+					" " + tutorial.getAnswer1() + " \n";
+				}
     //create a request
-      ChatBotRequest request = new ChatBotRequest(model, prompt);
+      ChatBotRequest request = new ChatBotRequest(modelGPT,
+          List.of(new Message("assistant", prompt)),
+          maxCompletions,
+          temperature,
+          maxTokens,
+          stop);
       
       // call the API
       ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
@@ -102,6 +139,8 @@ public class TutorialController {
           return "No response";
       } else {
         tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
+		System.out.println(response.getChoices().get(0).getMessage().getContent());
+		//model.addAttribute("result", re);
       }
     
 
