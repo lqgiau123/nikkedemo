@@ -31,11 +31,11 @@ public class TutorialController {
 	private TutorialRepository tutorialRepository;
 
 	@Qualifier("openaiRestTemplate")
-		@Autowired
-		private RestTemplate restTemplate;
-		
-		@Value("${openai.chatgtp.model}")
-		private String modelGPT;
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Value("${openai.chatgtp.model}")
+	private String modelGPT;
 
 	@Value("${openai.chatgtp.max-completions}")
 	private int maxCompletions;
@@ -59,7 +59,6 @@ public class TutorialController {
 		String strDate = sdfDate.format(now);
 		return strDate;
 	}
-
 
 	@GetMapping("/demo")
 	public String getAll(Model model, @Param("titleSearch") String titleSearch
@@ -101,7 +100,7 @@ public class TutorialController {
 			tutorial.setCreateAt(getCurrentTimeStamp());
 			tutorialRepository.save(tutorial);
 
-			redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
+			redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
 		} catch (Exception e) {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
@@ -136,11 +135,10 @@ public class TutorialController {
 		try {
 			tutorialRepository.save(tutorial);
 
-			redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
+			redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
 		} catch (Exception e) {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
-
 
 		return "redirect:/demo";
 	}
@@ -152,42 +150,11 @@ public class TutorialController {
 
 			model.addAttribute("tutorial", tutorial);
 			model.addAttribute("pageTitle", "編集画面");
-
 			return "tutorial_form";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("message", e.getMessage());
-
 			return "redirect:/demo";
 		}
 	}
 
-	@GetMapping("/tutorials/delete/{id}")
-	public String deleteTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-		try {
-			tutorialRepository.deleteById(id);
-
-			redirectAttributes.addFlashAttribute("message", "The Tutorial with id=" + id + " has been deleted successfully!");
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", e.getMessage());
-		}
-
-		return "redirect:/tutorials";
-	}
-
-	@GetMapping("/tutorials/{id}/published/{status}")
-	public String updateTutorialPublishedStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean published,
-			Model model, RedirectAttributes redirectAttributes) {
-		try {
-			tutorialRepository.updatePublishedStatus(id, published);
-
-			String status = published ? "published" : "disabled";
-			String message = "The Tutorial id=" + id + " has been " + status;
-
-			redirectAttributes.addFlashAttribute("message", message);
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", e.getMessage());
-		}
-
-		return "redirect:/tutorials";
-	}
 }
