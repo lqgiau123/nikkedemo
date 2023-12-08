@@ -33,7 +33,7 @@ public class TutorialController {
 	@Qualifier("openaiRestTemplate")
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Value("${openai.chatgtp.model}")
 	private String modelGPT;
 
@@ -48,18 +48,17 @@ public class TutorialController {
 
 	@Value("${openai.chatgtp.max_tokens}")
 	private int maxTokens;
-		
-		@Value("${openai.chatgtp.api.url}")
-		private String apiUrl;
+
+	@Value("${openai.chatgtp.api.url}")
+	private String apiUrl;
 
 	/* Create DateTime */
-		public static String getCurrentTimeStamp() {
+	public static String getCurrentTimeStamp() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 		return strDate;
 	}
-
 
 	@GetMapping("/")
 	public String Home(Model model) {
@@ -68,19 +67,20 @@ public class TutorialController {
 	}
 
 	@GetMapping("/demo")
-	public String getAll(Model model, @Param("titleSearch") String titleSearch
-				, @Param("majorSearch") String majorSearch
-				, @Param("questionSearch") String questionSearch
-				, @Param("answerSearch") String answerSearch
-				, @Param("resultSearch") String resultSearch ) {
+	public String getAll(Model model, @Param("titleSearch") String titleSearch,
+			@Param("majorSearch") String majorSearch, @Param("questionSearch") String questionSearch,
+			@Param("answerSearch") String answerSearch, @Param("resultSearch") String resultSearch) {
 		try {
 			List<Tutorial> tutorials = new ArrayList<Tutorial>();
-			if ((titleSearch == null || titleSearch == "") && (majorSearch == null || majorSearch == "") && (questionSearch == null || questionSearch == "") && (answerSearch == null || answerSearch == "" ) && (resultSearch == null || resultSearch == "" )) {
+			if ((titleSearch == null || titleSearch == "") && (majorSearch == null || majorSearch == "")
+					&& (questionSearch == null || questionSearch == "") && (answerSearch == null || answerSearch == "")
+					&& (resultSearch == null || resultSearch == "")) {
 				tutorials = tutorialRepository.findAll();
 				model.addAttribute("tutorials", tutorials);
 
 			} else {
-				tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
+				tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch,
+						resultSearch);
 				model.addAttribute("titleSearch", titleSearch);
 				model.addAttribute("majorSearch", majorSearch);
 				model.addAttribute("questionSearch", questionSearch);
@@ -104,7 +104,7 @@ public class TutorialController {
 		return "tutorial_form";
 	}
 
-	//@PostMapping("/tutorials/save")
+	// @PostMapping("/tutorials/save")
 	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "save")
 	public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
 		try {
@@ -122,26 +122,25 @@ public class TutorialController {
 	// save and call API
 	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
 	public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
-	String prompt = tutorial.toString();
+		String prompt = tutorial.toString();
 
-		//create a request
+		// create a request
 		ChatBotRequest request = new ChatBotRequest(modelGPT,
 				List.of(new Message("assistant", prompt)),
 				maxCompletions,
 				temperature,
 				maxTokens,
 				stop);
-		
+
 		// call the API
 		ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
-		
+
 		if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
-				return "No response";
+			return "No response";
 		} else {
 			tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
 			System.out.println(response.getChoices().get(0).getMessage().getContent());
 		}
-		
 
 		try {
 			tutorialRepository.save(tutorial);
