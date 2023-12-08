@@ -75,14 +75,19 @@ public class TutorialController {
 				, @Param("resultSearch") String resultSearch ) {
 		try {
 			List<Tutorial> tutorials = new ArrayList<Tutorial>();
+			if ((titleSearch == null) && (majorSearch == null) && (questionSearch == null) && (answerSearch == null) && (resultSearch == null)) {
+				tutorials = tutorialRepository.findAll();
+				model.addAttribute("tutorials", tutorials);
 
-			tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
-			model.addAttribute("titleSearch", titleSearch);
-			model.addAttribute("majorSearch", majorSearch);
-			model.addAttribute("questionSearch", questionSearch);
-			model.addAttribute("answerSearch", answerSearch);
-			model.addAttribute("resultSearch", resultSearch);
-			model.addAttribute("tutorials", tutorials);
+			} else {
+				tutorials = tutorialRepository.queryByKeySearch(titleSearch, majorSearch, questionSearch, answerSearch, resultSearch);
+				model.addAttribute("titleSearch", titleSearch);
+				model.addAttribute("majorSearch", majorSearch);
+				model.addAttribute("questionSearch", questionSearch);
+				model.addAttribute("answerSearch", answerSearch);
+				model.addAttribute("resultSearch", resultSearch);
+				model.addAttribute("tutorials", tutorials);
+			}
 		} catch (Exception e) {
 			model.addAttribute("message", e.getMessage());
 		}
@@ -106,7 +111,6 @@ public class TutorialController {
 			tutorial.setCreateBy("demo");
 			tutorial.setCreateAt(getCurrentTimeStamp());
 			tutorialRepository.save(tutorial);
-
 			redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
 		} catch (Exception e) {
 			redirectAttributes.addAttribute("message", e.getMessage());
