@@ -75,7 +75,7 @@ public class TutorialController {
 				, @Param("resultSearch") String resultSearch ) {
 		try {
 			List<Tutorial> tutorials = new ArrayList<Tutorial>();
-			if ((titleSearch == null) && (majorSearch == null) && (questionSearch == null) && (answerSearch == null) && (resultSearch == null)) {
+			if ((titleSearch == null || titleSearch == "") && (majorSearch == null || majorSearch == "") && (questionSearch == null || questionSearch == "") && (answerSearch == null || answerSearch == "" ) && (resultSearch == null || resultSearch == "" )) {
 				tutorials = tutorialRepository.findAll();
 				model.addAttribute("tutorials", tutorials);
 
