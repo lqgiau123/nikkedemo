@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class ChatBotRequest {
      private String model;
     private List<Message> messages;
-    private int n;
-    private double temperature;
-    private int max_tokens;
-    private String stop;
+    // private int n;
+    // private double temperature;
+    // private int max_tokens;
+    // private String stop;
 
     public ChatBotRequest(String model, String prompt) {
         this.model = model;

@@ -126,12 +126,15 @@ public class TutorialController {
 		String prompt = tutorial.toString();
 
 		// create a request
+		// ChatBotRequest request = new ChatBotRequest(modelGPT,
+		// 		List.of(new Message("assistant", prompt)),
+		// 		maxCompletions,
+		// 		temperature,
+		// 		maxTokens,
+		// 		stop);
+		
 		ChatBotRequest request = new ChatBotRequest(modelGPT,
-				List.of(new Message("assistant", prompt)),
-				maxCompletions,
-				temperature,
-				maxTokens,
-				stop);
+		List.of(new Message("assistant", prompt)));
 
 		// call the API
 		try {
