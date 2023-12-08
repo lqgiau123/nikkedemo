@@ -106,7 +106,7 @@ public class TutorialController {
 
 	// @PostMapping("/tutorials/save")
 	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "save")
-	public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
+	public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes, Model model) {
 		try {
 			tutorial.setCreateBy("demo");
 			tutorial.setCreateAt(getCurrentTimeStamp());
@@ -122,6 +122,7 @@ public class TutorialController {
 	// save and call API
 	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
 	public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
+		// call api
 		String prompt = tutorial.toString();
 
 		// create a request
@@ -133,19 +134,23 @@ public class TutorialController {
 				stop);
 
 		// call the API
-		ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
-
-		if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
-			return "No response";
-		} else {
-			tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
-			System.out.println(response.getChoices().get(0).getMessage().getContent());
-		}
-
 		try {
-			tutorialRepository.save(tutorial);
-
-			redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
+			ChatBotResponse response = restTemplate.postForObject(apiUrl, request, ChatBotResponse.class);
+			if (response == null || response.getChoices() == null || response.getChoices().isEmpty()) {
+				// save data
+				tutorialRepository.save(tutorial);
+				return "No response";
+			} else {
+				tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
+				System.out.println(response.getChoices().get(0).getMessage().getContent());
+				// save data
+				try {
+					tutorialRepository.save(tutorial);
+					redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
+				} catch (Exception e) {
+					redirectAttributes.addAttribute("message", e.getMessage());
+				}
+			}
 		} catch (Exception e) {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
