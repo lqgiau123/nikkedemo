@@ -10,24 +10,14 @@ public class Tutorial {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column(length = 256)
-  private String description;
-
-  @Column(nullable = false)
-  private int level;
-
   @Column(nullable = false)
   private int createNumber;
 
   @Column(nullable = false)
   private int contentNumber;
 
-  @Column
-  private boolean published;
-
   @Column(columnDefinition="TEXT")
   private String result;
-
 
   @Column(length = 255, nullable = false)
   private String title;
@@ -135,14 +125,7 @@ public class Tutorial {
 
   }
 
-  public Tutorial(String title, String description, int level, boolean published) {
-    this.title = title;
-    this.description = description;
-    this.level = level;
-    this.published = published;
-  }
 
- 
     @Override
     public String toString() {
         return
@@ -215,47 +198,6 @@ public class Tutorial {
         this.id = id;
     }
 
-    /**
-     * @return String return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return int return the level
-     */
-    public int getLevel() {
-        return level;
-    }
-
-    /**
-     * @param level the level to set
-     */
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    /**
-     * @return boolean return the published
-     */
-    public boolean isPublished() {
-        return published;
-    }
-
-    /**
-     * @param published the published to set
-     */
-    public void setPublished(boolean published) {
-        this.published = published;
-    }
 
     /**
      * @return int return the idService
@@ -738,8 +680,6 @@ public class Tutorial {
     }
 
     
-
-
     /**
      * @return int return the createNumber
      */

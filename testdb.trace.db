@@ -738,3 +738,6 @@ select tutorial0_.id as id1_0_, tutorial0_.answer1 as answer2_0_, tutorial0_.ans
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-12-11 15:56:45 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "TRUNCATE [*]TUTORIALS"; expected "TABLE"; SQL statement:
+TRUNCATE TUTORIALS [42001-214]
