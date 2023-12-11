@@ -25,13 +25,13 @@
 				<form th:action="@{/demo/save}" method="post" enctype="multipart/form-data" th:object="${tutorial}" class="form-edit">
 					<!-- Tab links -->
 					<ul class="nav nav-tabs mt-3">
-						<li class="nav-item"><a href="#home" class="nav-link active" data-bs-toggle="tab">入力・生成</a></li>
-						<li class="nav-item"><a href="#aboutus" class="nav-link" data-bs-toggle="tab">結果・編集</a></li>
+						<li class="nav-item"><a href="#home" class="nav-link" th:classappend="${#httpServletRequest.getParameter('is_result') != null} ? '' : 'active'" data-bs-toggle="tab">入力・生成</a></li>
+						<li class="nav-item"><a href="#aboutus" class="nav-link" th:classappend="${#httpServletRequest.getParameter('is_result') != null} ? 'active' : ''" data-bs-toggle="tab">結果・編集</a></li>
 					</ul>
 					<!-- Tab links -->
 					<!-- tab 1 -->
 					<div class="tab-content">
-						<div class="tab-pane fade show active" id="home">
+						<div class="tab-pane fade"  th:classappend="${#httpServletRequest.getParameter('is_result') != null} ? '' : 'active show'" id="home">
 							<input type="hidden" th:field="*{id}" />
 							<div class="p-3">
 								<div class="form-group row">
@@ -449,7 +449,7 @@
 							<!-- tab 1 -->
 						</div>
 						<!-- tab 2 -->
-						<div class="tab-pane fade" id="aboutus">
+						<div class="tab-pane fade"  th:classappend="${#httpServletRequest.getParameter('is_result') != null} ? 'active show' : ''" id="aboutus">
 							<!-- result -->
 							<div class="form-group row">
 								<div class="col-sm-12 p-3">
@@ -460,13 +460,19 @@
 						</div>
 						<!-- tab 2 -->
 					</div>
+					
 					<div class="text-center">
-						<input type="submit" name="save" value="保存" class="btn btn-primary btn-sm mr-2 btn-customize" />
-						<input type="submit" name="saveandcall" value="プレスリリース生成 " id="" class="btn btn-primary btn-sm mr-2 btn-customize" />
+						<input type="submit" name="save"  id="save" value="保存" class="btn btn-primary btn-sm mr-2 btn-customize" />
+						<input type="submit" name="saveandcall" value="プレスリリース生成 " id="saveandcall" class="btn btn-primary btn-sm mr-2 btn-customize" />
 						<input type="button" value="キャンセル" id="btnCancel" class="btn btn-secondary btn-sm" />
 					</div>
 			</div>
 			</form>
+		</div>
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
 		</div>
 	</section>
 	<div th:replace="fragments/footer :: footer"></div>
@@ -476,6 +482,25 @@
 			$("#btnCancel").on("click", function () {
 				window.location = "[[@{/demo}]]";
 			});
+
+		});
+		jQuery(function($){
+		$(document).ajaxSend(function() {
+			$("#overlay").fadeIn(300);　
+		});
+				
+		$('#saveandcall').click(function(){
+			$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+			}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},30000);
+			});
+		});	
 		});
 	</script>
 </body>

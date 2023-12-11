@@ -158,7 +158,7 @@ public class TutorialController {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
 
-		return "redirect:/demo/" + tutorial.getId();
+		return "redirect:/demo/" + tutorial.getId() + "?is_result=1";
 	}
 
 	@GetMapping("/demo/{id}")
