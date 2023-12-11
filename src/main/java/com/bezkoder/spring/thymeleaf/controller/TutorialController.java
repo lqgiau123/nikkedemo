@@ -1,9 +1,13 @@
 package com.bezkoder.spring.thymeleaf.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,6 +59,7 @@ public class TutorialController {
 	/* Create DateTime */
 	public static String getCurrentTimeStamp() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		sdfDate.setTimeZone(TimeZone.getTimeZone("Japan"));
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 		return strDate;
