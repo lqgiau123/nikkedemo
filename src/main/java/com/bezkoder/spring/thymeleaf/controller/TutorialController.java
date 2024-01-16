@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -79,7 +79,8 @@ public class TutorialController {
 		try {
 			List<Tutorial> tutorials = new ArrayList<Tutorial>();
 			if ((titleSearch == null || titleSearch.equals("")) && (majorSearch == null || majorSearch.equals(""))
-					&& (questionSearch == null || questionSearch.equals("")) && (answerSearch == null || answerSearch.equals(""))
+					&& (questionSearch == null || questionSearch.equals(""))
+					&& (answerSearch == null || answerSearch.equals(""))
 					&& (resultSearch == null || resultSearch.equals(""))) {
 				tutorials = tutorialRepository.findAll();
 				model.addAttribute("tutorials", tutorials);
@@ -110,8 +111,10 @@ public class TutorialController {
 		return "tutorial_form";
 	}
 
-	// @PostMapping("/tutorials/save")
-	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "save")
+	/*
+	 * Create and no call chat GPT API
+	 */
+	@PostMapping(value = "/demo/save", params = "save")
 	public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes, Model model) {
 		try {
 			tutorial.setCreateBy("demo");
@@ -121,12 +124,13 @@ public class TutorialController {
 		} catch (Exception e) {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
-
 		return urlHome;
 	}
 
-	// save and call API
-	@RequestMapping(value = "/demo/save", method = RequestMethod.POST, params = "saveandcall")
+	/*
+	 * Create and call chat GPT API
+	 */
+	@PostMapping(value = "/demo/save", params = "saveandcall")
 	public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
 		// call api
 		String prompt = tutorial.toString();
@@ -143,12 +147,8 @@ public class TutorialController {
 			} else {
 				tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
 				// save data
-				try {
-					tutorialRepository.save(tutorial);
-					redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
-				} catch (Exception e) {
-					redirectAttributes.addAttribute("message", e.getMessage());
-				}
+				tutorialRepository.save(tutorial);
+				redirectAttributes.addFlashAttribute("message", "The Content has been saved successfully!");
 			}
 		} catch (Exception e) {
 			redirectAttributes.addAttribute("message", e.getMessage());
@@ -160,10 +160,12 @@ public class TutorialController {
 	@GetMapping("/demo/{id}")
 	public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {
-			Tutorial tutorial = tutorialRepository.findById(id).get();
-
-			model.addAttribute("tutorial", tutorial);
-			model.addAttribute("pageTitle", "編集画面");
+			Optional<Tutorial> value = tutorialRepository.findById(id);
+			if (value.isPresent()) {
+				Tutorial tutorial = value.get();
+				model.addAttribute("tutorial", tutorial);
+				model.addAttribute("pageTitle", "編集画面");
+			}
 			return "tutorial_form";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("message", e.getMessage());
