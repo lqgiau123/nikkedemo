@@ -53,18 +53,22 @@ public class TutorialController {
 	@Value("${openai.chatgtp.api.url}")
 	private String apiUrl;
 
-	/* Create DateTime */
+	private String urlHome = "redirect:/demo";
+
+	/*
+	 * Create DateTime
+	 * Date create Update
+	 */
 	public static String getCurrentTimeStamp() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		sdfDate.setTimeZone(TimeZone.getTimeZone("Japan"));
 		Date now = new Date();
-		String strDate = sdfDate.format(now);
-		return strDate;
+		return sdfDate.format(now);
 	}
 
 	@GetMapping("/")
-	public String Home(Model model) {
-		return "redirect:/demo";
+	public String home(Model model) {
+		return urlHome;
 
 	}
 
@@ -74,9 +78,9 @@ public class TutorialController {
 			@Param("answerSearch") String answerSearch, @Param("resultSearch") String resultSearch) {
 		try {
 			List<Tutorial> tutorials = new ArrayList<Tutorial>();
-			if ((titleSearch == null || titleSearch == "") && (majorSearch == null || majorSearch == "")
-					&& (questionSearch == null || questionSearch == "") && (answerSearch == null || answerSearch == "")
-					&& (resultSearch == null || resultSearch == "")) {
+			if ((titleSearch == null || titleSearch.equals("")) && (majorSearch == null || majorSearch.equals(""))
+					&& (questionSearch == null || questionSearch.equals("")) && (answerSearch == null || answerSearch.equals(""))
+					&& (resultSearch == null || resultSearch.equals(""))) {
 				tutorials = tutorialRepository.findAll();
 				model.addAttribute("tutorials", tutorials);
 
@@ -118,7 +122,7 @@ public class TutorialController {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
 
-		return "redirect:/demo";
+		return urlHome;
 	}
 
 	// save and call API
@@ -126,17 +130,8 @@ public class TutorialController {
 	public String saveAndCallGPT(Tutorial tutorial, RedirectAttributes redirectAttributes) {
 		// call api
 		String prompt = tutorial.toString();
-
-		// create a request
-		// ChatBotRequest request = new ChatBotRequest(modelGPT,
-		// 		List.of(new Message("assistant", prompt)),
-		// 		maxCompletions,
-		// 		temperature,
-		// 		maxTokens,
-		// 		stop);
-		
 		ChatBotRequest request = new ChatBotRequest(modelGPT,
-		List.of(new Message("assistant", prompt)));
+				List.of(new Message("assistant", prompt)));
 
 		// call the API
 		try {
@@ -147,7 +142,6 @@ public class TutorialController {
 				return "No response";
 			} else {
 				tutorial.setResult(response.getChoices().get(0).getMessage().getContent());
-				System.out.println(response.getChoices().get(0).getMessage().getContent());
 				// save data
 				try {
 					tutorialRepository.save(tutorial);
@@ -160,7 +154,7 @@ public class TutorialController {
 			redirectAttributes.addAttribute("message", e.getMessage());
 		}
 
-		return "redirect:/demo/" + tutorial.getId() + "?is_result=1";
+		return urlHome + tutorial.getId() + "?is_result=1";
 	}
 
 	@GetMapping("/demo/{id}")
@@ -173,7 +167,7 @@ public class TutorialController {
 			return "tutorial_form";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("message", e.getMessage());
-			return "redirect:/demo";
+			return urlHome;
 		}
 	}
 
